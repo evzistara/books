@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" type="module"></script>
-</head>
-<body>
-    
-</body>
+    -
+    <link
+      rel="stylesheet"
+      href="node_modules/modern-normalize/modern-normalize.css"
+    />
+  </head>
+  <body>
+    <section>
+      <h1>Library</h1>
+      <button class="btn add">Add book</button>
+      <dialog>
+        <button class="btn close" autofocus>Close</button>
+        <form>
+          <h2>Add a new book</h2>
+          <p>
+            <label for="book-title">Book title: </label>
+            <input type="text" id="book-title" required />
+          </p>
+          <p>
+            <label for="book-author">Book author: </label>
+            <input type="text" id="book-author" required />
+          </p>
+          <p>
+            <label for="book-pages">Book pages: </label>
+            <input type="number" id="book-pages" required />
+          </p>
+          <p>
+            <label for="book-read">Read: </label>
+            <input type="checkbox" id="book-read" />
+          </p>
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </dialog>
+      <div class="books">
+        <div class="card">
+          <div class="buttons"></div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
