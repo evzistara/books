@@ -3,21 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Library</title>
+    <title>My Online Library</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" type="module"></script>
-    -
     <link
       rel="stylesheet"
       href="node_modules/modern-normalize/modern-normalize.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Macondo&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <h1>My Online Library</h1>
+      <p class="sub-title">Do you want to keep your books in order? Don't look any further!</p>
+      <button class="btn add">+ Add book</button>
+    </header>
+
     <section>
-      <h1>Library</h1>
-      <button class="btn add">Add book</button>
+      <h2>My Books</h2>
+
+      <!-- POP UP -->
       <dialog>
-        <button class="btn close" autofocus>Close</button>
+        <button class="btn close" autofocus>X</button>
         <form>
           <h2>Add a new book</h2>
           <p>
@@ -39,11 +48,14 @@
           <button type="submit" class="btn">Submit</button>
         </form>
       </dialog>
+      <!-- POP UP -->
+
       <div class="books">
         <div class="card">
           <div class="buttons"></div>
         </div>
       </div>
     </section>
+
   </body>
 </html>

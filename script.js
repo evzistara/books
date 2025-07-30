@@ -74,7 +74,7 @@ function displayBooks(){
         newCard.classList.add('card');
         newCard.dataset.id = book.id;
         
-        const heading = document.createElement('h2');
+        const heading = document.createElement('h3');
         heading.textContent = book.title;
 
         const author = document.createElement('p');
