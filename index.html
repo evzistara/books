@@ -6,10 +6,6 @@
     <title>My Online Library</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" type="module"></script>
-    <link
-      rel="stylesheet"
-      href="node_modules/modern-normalize/modern-normalize.css"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Macondo&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
@@ -25,25 +21,26 @@
       <h2>My Books</h2>
 
       <!-- POP UP -->
+    
       <dialog>
         <button class="btn close" autofocus>X</button>
         <form>
           <h2>Add a new book</h2>
           <p>
-            <label for="book-title">Book title: </label>
-            <input type="text" id="book-title" required />
+            <label for="bookTitle">Book title: </label>
+            <input type="text" id="bookTitle" name="bookTitle" required />
           </p>
           <p>
-            <label for="book-author">Book author: </label>
-            <input type="text" id="book-author" required />
+            <label for="bookAuthor">Book author: </label>
+            <input type="text" id="bookAuthor" name="bookAuthor" required />
           </p>
           <p>
-            <label for="book-pages">Book pages: </label>
-            <input type="number" id="book-pages" required />
+            <label for="bookPages">Book pages: </label>
+            <input type="number" id="bookPages" name="bookPages" required />
           </p>
           <p>
-            <label for="book-read">Read: </label>
-            <input type="checkbox" id="book-read" />
+            <label for="bookRead">Read: </label>
+            <input type="checkbox" id="bookRead" name="bookRead" />
           </p>
           <button type="submit" class="btn">Submit</button>
         </form>
@@ -51,9 +48,7 @@
       <!-- POP UP -->
 
       <div class="books">
-        <div class="card">
-          <div class="buttons"></div>
-        </div>
+       
       </div>
     </section>
 

@@ -1,127 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-    displayBooks();
+const addBtn = document.querySelector(".add");
+const closeBtn = document.querySelector(".close");
+const dialog = document.querySelector("dialog");
+const bookCard = document.querySelector(".books");
+const form = document.querySelector("form"); 
+const readBtn = document.querySelector(".read");
 
-    const dialog = document.querySelector('dialog');
-    const buttonAdd = document.querySelector('.add');
-    const buttonClose = document.querySelector('.close');
-    const formSubmit = document.querySelector('form');
-    const bookContainer = document.querySelector('.books');
 
-    buttonAdd.addEventListener('click', () => { 
-        dialog.showModal(); 
-    });
-
-    buttonClose.addEventListener('click', () => { 
-        dialog.close(); 
-    });
-    
-    formSubmit.addEventListener('submit', (event)=>{
-    event.preventDefault();
-
-    const bookTitle = document.querySelector('#book-title').value;
-    const bookAuthor = document.querySelector('#book-author').value;
-    const bookPages = document.querySelector('#book-pages').value;
-    const bookRead = document.querySelector('#book-read').checked;
-
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
-    displayBooks();
-
-    formSubmit.reset();
-    dialog.close();
-    });
+addBtn.addEventListener("click", () => {
+  dialog.showModal();
 });
 
-const myLibrary = [{
-    title: "How to Adult",
-    author: "Stephen Wildish",
-    pages: 182,
-    read: true
-}, {
-    title:"A Court of Silver Flames",
-    author: "Sarah J. Maas",
-    pages: 768,
-    read: true
-}];
+closeBtn.addEventListener("click", () => {
+  dialog.close();
+});
 
-function Book (title, author, pages, read){
-    this.id=crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function() {
-        return this.title + " by " + this.author + ", " + this.pages + " pages, " + this.read;  
-    }
+let library = [
+  {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    pages: 180,
+    read: false,
+  },
+  {
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    pages: 281,
+    read: false,
+  },
+];
+
+let booksLocalStorage = JSON.parse(localStorage.getItem('library'))
+if(booksLocalStorage){
+  library = booksLocalStorage;
+  renderBooks();
 }
 
-Book.prototype.toggleRead = function(){
-    this.read = !this.read;
+
+
+function renderBooks() {
+  bookCard.innerHTML = "";
+  for (let book of library) {
+    bookCard.innerHTML += `
+     <div class="card" id="${book.title}">
+        <h3>${book.title}</h3>
+        <p>Author: ${book.author}</p>
+        <p>Pages: ${book.pages}</p>
+        <p>Read: ${book.read ? "Yes" : "No"}</p>
+        <div class="buttons">
+            <button class="btn read">Read</button>
+            <button class="btn delete">Delete</button>
+        </div>
+    </div>`;
+  }
 }
 
-function addBookToLibrary(title, author, pages, read){
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
+renderBooks();
 
+form.addEventListener('submit', submitBook);
 
+function submitBook(e){
+  e.preventDefault();
+  const bookFormData = new FormData(form);
+  const book = {
+    title: bookFormData.get('bookTitle'),
+    author: bookFormData.get('bookAuthor'),
+    pages: bookFormData.get('bookPages'),
+    read: bookFormData.get('bookRead') === 'on',
+  };
+  library.push(book);
+  localStorage.setItem('library', JSON.stringify(library));
+  renderBooks();
+  form.reset();
 }
 
-function displayBooks(){
-    const bookContainer = document.querySelector('.books');
-    bookContainer.innerHTML = ''; 
-
-    myLibrary.forEach(book => {
-        const newCard = document.createElement('div');
-        newCard.classList.add('card');
-        newCard.dataset.id = book.id;
-        
-        const heading = document.createElement('h3');
-        heading.textContent = book.title;
-
-        const author = document.createElement('p');
-        author.textContent = `Author: ${book.author}`;
-
-        const pages = document.createElement('p');
-        pages.textContent = `Pages: ${book.pages}`;
-
-        const read = document.createElement('p');
-        read.textContent = `Book read: ${book.read}`;
-
-        const buttonContainer = document.createElement('div');
-        buttonContainer.classList.add('buttons');
-
-        const buttonRemove = document.createElement('button');
-        buttonRemove.classList.add('btn', 'remove');
-        buttonRemove.textContent = 'Remove';
-
-        const buttonRead = document.createElement('button');
-        buttonRead.classList.add('btn', 'read');
-        buttonRead.textContent = 'Read';
-
-        buttonContainer.appendChild(buttonRemove);
-        buttonContainer.appendChild(buttonRead);
-        
-        newCard.appendChild(heading);
-        newCard.appendChild(author);
-        newCard.appendChild(pages);
-        newCard.appendChild(read);
-        newCard.appendChild(buttonContainer);
-
-        bookContainer.appendChild(newCard);
-
-        buttonRead.addEventListener('click', () => {
-            book.toggleRead();
-            displayBooks();
-        });
+bookCard.addEventListener('change', (e)=> {
+  console.log(e.target.id);
+})
 
 
-        buttonRemove.addEventListener('click', () => {
-            removeBook(book.id);
-        });
-    });
-}
+function readBook(){
 
-function removeBook(bookId){
-        const bookIndex = myLibrary.findIndex(book => book.id === bookId);
-        myLibrary.splice(bookIndex, 1);
-        displayBooks();
 }
