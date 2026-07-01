@@ -2,8 +2,14 @@
 
 @theme {
   --color-primary: #264636;
-  --color-CTA:#B85A38;
-  --color-background:#f5f0e8;
-  --color-box-background:#FAFAF9;
-  --color-button-background:#EAE3D8;
+  --color-primary-light: #DCE3D7;
+  --color-CTA: #c0522a;
+  --color-background: #f5f0e8;
+  --color-box-background: #faf7f2;;
+  --color-button-background: #eae3d8;
+  --color-text: #1a1a1a;
+  --color-button-foreground: #6b6355;
+
+  --color-input-background: #ede8df;
+  --color-switch-background: #cbbb9f;
 }
