@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export default function Popup() {
@@ -22,8 +21,9 @@ export default function Popup() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
-    const email = formJson.email;
-    console.log(email);
+    const title = formJson.title;
+    const author = formJson.author;
+    console.log(title, author);
     handleClose();
   };
 
@@ -35,31 +35,99 @@ export default function Popup() {
       >
         + Add book
       </button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "500px",
+            padding: "10px",
+            backgroundColor: "#faf7f2",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{ color: "#1a1a1a", fontWeight: "bold", fontSize: "1.1rem" }}
+        >
+          Add a new book
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <form onSubmit={handleSubmit} id="subscription-form">
+          <form onSubmit={handleSubmit} id="book-form">
             <TextField
               autoFocus
               required
-              margin="dense"
-              id="name"
-              name="email"
-              label="Email Address"
-              type="email"
+              margin="normal"
+              id="title"
+              name="title"
+              label="Book Title"
+              type="text"
               fullWidth
-              variant="standard"
+              color="primary"
+              placeholder="e.g. Harry Potter and the Sorcerer's Stone"
+              variant="outlined"
+              sx={{
+                // Root class for the input field
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "#eae3d8",
+                  // Class for the border around the input field
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#6b6355",
+                    borderWidth: "1px",
+                  },
+                },
+                // Class for the label of the input field
+                "& .MuiInputLabel-outlined": {
+                  color: "#2e2e2e",
+                },
+              }}
+            />
+            <TextField
+              autoFocus
+              required
+              margin="normal"
+              id="author"
+              name="author"
+              label="Book Author"
+              type="text"
+              fullWidth
+              placeholder="e.g. J.K. Rowling"
+              variant="outlined"
+              sx={{
+                // Root class for the input field
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "#eae3d8",
+                  // Class for the border around the input field
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#6b6355",
+                    borderWidth: "1px",
+                  },
+                },
+                // Class for the label of the input field
+                "& .MuiInputLabel-outlined": {
+                  color: "#2e2e2e",
+                },
+              }}
             />
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" form="subscription-form">
-            Subscribe
+          <Button
+            onClick={handleClose}
+            sx={{
+              color: "#1a1a1a",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            form="book-form"
+            variant="contained"
+            sx={{
+              backgroundColor: "#c0522a",
+            }}
+          >
+            Add Book
           </Button>
         </DialogActions>
       </Dialog>
