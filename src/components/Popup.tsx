@@ -59,7 +59,7 @@ export default function Popup() {
               margin="normal"
               id="title"
               name="title"
-              label="Book Title"
+              label="Title"
               type="text"
               fullWidth
               color="primary"
@@ -72,12 +72,19 @@ export default function Popup() {
                   // Class for the border around the input field
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#6b6355",
-                    borderWidth: "1px",
                   },
                 },
                 // Class for the label of the input field
                 "& .MuiInputLabel-outlined": {
                   color: "#2e2e2e",
+                  textTransform: "uppercase",
+                  fontSize: "0.8rem",
+                  margin: "auto",
+                  paddingTop: "4px",
+                },
+                // 3. What happens to the label when it becomes ACTIVE
+                "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+                  fontSize: "0.95rem !important",
                 },
               }}
             />
@@ -87,7 +94,7 @@ export default function Popup() {
               margin="normal"
               id="author"
               name="author"
-              label="Book Author"
+              label="Author"
               type="text"
               fullWidth
               placeholder="e.g. J.K. Rowling"
@@ -99,12 +106,19 @@ export default function Popup() {
                   // Class for the border around the input field
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#6b6355",
-                    borderWidth: "1px",
                   },
                 },
                 // Class for the label of the input field
                 "& .MuiInputLabel-outlined": {
                   color: "#2e2e2e",
+                  textTransform: "uppercase",
+                  fontSize: "0.8rem",
+                  margin: "auto",
+                  paddingTop: "4px",
+                },
+                // 3. What happens to the label when it becomes ACTIVE
+                "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+                  fontSize: "0.95rem !important",
                 },
               }}
             />
