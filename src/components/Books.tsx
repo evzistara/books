@@ -18,6 +18,7 @@ interface Book {
 
 export default function Books() {
   const [books, setBooks] = useState<Book[]>([]);
+  const [filter, setFilter] = useState<"all" | "read" | "unread">("all");
 
   useEffect(() => {
     const unsubscribe = subscribeToBooks((books) => {
@@ -54,6 +55,12 @@ export default function Books() {
     }
   };
 
+  const filteredBooks = books.filter((book) => {
+    if (filter === "read") return book.read;
+    if (filter === "unread") return !book.read;
+    return true;
+  });
+
   return (
     <>
       <div className="bg-background h-dvh p-5">
@@ -61,17 +68,32 @@ export default function Books() {
           <div className="flex justify-between pt-10 pb-10">
             {/* FILTER BUTTONS & POPUP */}
             <div>
-              <button className="px-4 py-2 bg-button-background">All</button>
-              <button className="px-4 py-2 bg-button-background">Unread</button>
-              <button className="px-4 py-2 bg-button-background">Read</button>
+              <button
+                className="px-4 py-2 bg-button-background hover:bg-primary hover:text-primary-light"
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className="px-4 py-2 bg-button-background hover:bg-primary hover:text-primary-light"
+                onClick={() => setFilter("unread")}
+              >
+                Unread
+              </button>
+              <button
+                className="px-4 py-2 bg-button-background hover:bg-primary hover:text-primary-light"
+                onClick={() => setFilter("read")}
+              >
+                Read
+              </button>
             </div>
             <Popup />
           </div>
 
           {/* BOOKS */}
           <div className="md:grid grid-cols-2 gap-5 lg:grid-cols-3">
-            {books.length != 0
-              ? books.map((book) => {
+            {filteredBooks.length != 0
+              ? filteredBooks.map((book) => {
                   return (
                     <div
                       key={book.id}
