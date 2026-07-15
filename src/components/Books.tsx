@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Popup from "./Popup";
+import { getBooks } from "../api";
 
 export default function Books() {
+
+  const [books, setBooks] = useState()
 
   return (
     <>
