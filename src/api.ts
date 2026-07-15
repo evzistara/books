@@ -21,7 +21,10 @@ const booksCollectionRef = collection(db, "books");
 
 export async function getBooks() {
   const booksSnapshot = await getDocs(booksCollectionRef);
-  return booksSnapshot.docs.map((doc) => doc.data());
+  return booksSnapshot.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+  }));
 }
 
 console.log(getBooks());
