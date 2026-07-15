@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { addBook } from "../api";
 
 export default function Popup() {
   const [open, setOpen] = React.useState(false);
@@ -23,7 +24,7 @@ export default function Popup() {
     const formJson = Object.fromEntries((formData as any).entries());
     const title = formJson.title;
     const author = formJson.author;
-    console.log(title, author);
+    addBook(title, author);
     handleClose();
   };
 

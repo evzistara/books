@@ -6,6 +6,8 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -46,5 +48,14 @@ export async function changeReadStatus(bookId: string, currentStatus: boolean) {
   const bookDocRef = doc(db, "books", bookId);
   await updateDoc(bookDocRef, {
     read: !currentStatus,
+  });
+}
+
+export async function addBook(title: string, author: string) {
+  await addDoc(booksCollectionRef, {
+    title: title,
+    author: author,
+    read: false,
+    "date added": serverTimestamp(),
   });
 }
