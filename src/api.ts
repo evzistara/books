@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,5 +28,23 @@ const booksCollectionRef = collection(db, "books");
 
 export async function getBooks() {
   const booksSnapshot = await getDocs(booksCollectionRef);
-  return booksSnapshot.docs.map((doc) => doc.data());
+
+  return booksSnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    };
+  }) as any[];
+}
+
+export async function deleteBook(bookId: string) {
+  const bookDocRef = doc(db, "books", bookId);
+  await deleteDoc(bookDocRef);
+}
+
+export async function changeReadStatus(bookId: string, currentStatus: boolean) {
+  const bookDocRef = doc(db, "books", bookId);
+  await updateDoc(bookDocRef, {
+    read: !currentStatus,
+  });
 }

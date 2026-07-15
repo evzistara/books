@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Popup from "./Popup";
-import { getBooks } from "../api";
+import { getBooks, deleteBook, changeReadStatus } from "../api";
 
 interface FirestoreTimestamp {
   seconds: number;
   nanoseconds: number;
 }
 
+interface Book {
+  id: string;
+  title: string;
+  author: string;
+  read: boolean;
+  "date added": FirestoreTimestamp;
+}
+
 export default function Books() {
-  const [books, setBooks] = useState<any[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
     async function fetchBooks() {
@@ -26,6 +34,32 @@ export default function Books() {
 
     const date = new Date(timestampObj.seconds * 1000);
     return date.toLocaleDateString("no-NO");
+  };
+
+  const handleDelete = async (bookId: string) => {
+    try {
+      await deleteBook(bookId);
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+
+  const handleChangeReadStatus = async (
+    bookId: string,
+    currentStatus: boolean,
+  ) => {
+    try {
+      await changeReadStatus(bookId, currentStatus);
+
+      setBooks((prevBooks) =>
+        prevBooks.map((book) =>
+          book.id === bookId ? { ...book, read: !currentStatus } : book,
+        ),
+      );
+    } catch (error) {
+      console.error("Error changing read status:", error);
+    }
   };
 
   return (
@@ -45,10 +79,10 @@ export default function Books() {
           {/* BOOKS */}
           <div className="md:grid grid-cols-2 gap-5 lg:grid-cols-3">
             {books.length != 0
-              ? books.map((book, index) => {
+              ? books.map((book) => {
                   return (
                     <div
-                      key={index}
+                      key={book.id}
                       className={`mb-5 md:mb-0 bg-box-background p-4 border border-t-5 ${
                         !book.read
                           ? "border-button-background"
@@ -61,7 +95,10 @@ export default function Books() {
                         >
                           {book.read ? "READ" : "NOT READ"}
                         </span>
-                        <button>
+                        <button
+                          onClick={() => handleDelete(book.id)}
+                          className="hover:text-red-500"
+                        >
                           <FaRegTrashCan />
                         </button>
                       </div>
@@ -76,6 +113,9 @@ export default function Books() {
                         </p>
                         <button
                           className={`text-xs px-3 py-1 border font-semibold ${book.read ? "border-button-foreground text-button-foreground" : "border-primary text-primary"}`}
+                          onClick={() =>
+                            handleChangeReadStatus(book.id, book.read)
+                          }
                         >
                           {!book.read ? "✓ Mark read" : "Mark not read"}
                         </button>
