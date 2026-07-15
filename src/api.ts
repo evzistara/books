@@ -8,6 +8,7 @@ import {
   updateDoc,
   addDoc,
   serverTimestamp,
+  onSnapshot,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,15 +29,14 @@ const db = getFirestore(app);
 
 const booksCollectionRef = collection(db, "books");
 
-export async function getBooks() {
-  const booksSnapshot = await getDocs(booksCollectionRef);
-
-  return booksSnapshot.docs.map((doc) => {
-    return {
+export function subscribeToBooks(callback: (books: any[]) => void) {
+  return onSnapshot(booksCollectionRef, (snapshot) => {
+    const books = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    };
-  }) as any[];
+    }));
+    callback(books);
+  });
 }
 
 export async function deleteBook(bookId: string) {

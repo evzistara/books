@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Popup from "./Popup";
-import { getBooks, deleteBook, changeReadStatus } from "../api";
+import { subscribeToBooks, deleteBook, changeReadStatus } from "../api";
 
 interface FirestoreTimestamp {
   seconds: number;
@@ -20,11 +20,10 @@ export default function Books() {
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    async function fetchBooks() {
-      const booksData = await getBooks();
-      setBooks(booksData);
-    }
-    fetchBooks();
+    const unsubscribe = subscribeToBooks((books) => {
+      setBooks(books);
+    });
+    return () => unsubscribe();
   }, []);
 
   const formatTimestamp = (timestampObj: FirestoreTimestamp) => {
@@ -39,7 +38,6 @@ export default function Books() {
   const handleDelete = async (bookId: string) => {
     try {
       await deleteBook(bookId);
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
     } catch (error) {
       console.error("Error deleting book:", error);
     }
@@ -51,12 +49,6 @@ export default function Books() {
   ) => {
     try {
       await changeReadStatus(bookId, currentStatus);
-
-      setBooks((prevBooks) =>
-        prevBooks.map((book) =>
-          book.id === bookId ? { ...book, read: !currentStatus } : book,
-        ),
-      );
     } catch (error) {
       console.error("Error changing read status:", error);
     }
