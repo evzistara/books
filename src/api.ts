@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
-  getDocs,
   doc,
   deleteDoc,
   updateDoc,
@@ -10,9 +9,6 @@ import {
   serverTimestamp,
   onSnapshot,
 } from "firebase/firestore";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
   apiKey: "AIzaSyA9O6PwGBK-Dyd8KDjLGPOYiIHY5EoY8c4",
