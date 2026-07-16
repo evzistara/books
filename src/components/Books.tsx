@@ -55,11 +55,13 @@ export default function Books() {
     }
   };
 
-  const filteredBooks = books.filter((book) => {
-    if (filter === "read") return book.read;
-    if (filter === "unread") return !book.read;
-    return true;
-  });
+  const filteredBooks = books
+    .filter((book) => {
+      if (filter === "read") return book.read;
+      if (filter === "unread") return !book.read;
+      return true;
+    })
+    .sort((a, b) => b["date added"].seconds - a["date added"].seconds);
 
   return (
     <>
