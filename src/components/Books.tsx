@@ -61,7 +61,11 @@ export default function Books() {
       if (filter === "unread") return !book.read;
       return true;
     })
-    .sort((a, b) => b["date added"].seconds - a["date added"].seconds);
+    .sort((a, b) => {
+      const secondsA = a["date added"]?.seconds ?? 0;
+      const secondsB = b["date added"]?.seconds ?? 0;
+      return secondsB - secondsA;
+    });
 
   return (
     <>
